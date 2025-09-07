@@ -27,7 +27,7 @@ def paginate_users(page_size, offset):
     
     try:
         cursor = connection.cursor(dictionary=True)
-        cursor.execute(f"SELECT user_id, name, email, age FROM user_data LIMIT {page_size} OFFSET {offset}")
+        cursor.execute(f"SELECT * FROM user_data LIMIT {page_size} OFFSET {offset}")
         rows = cursor.fetchall()
         return rows
         
@@ -42,7 +42,7 @@ def paginate_users(page_size, offset):
             connection.close()
 
 
-def lazy_pagination(page_size):
+def lazy_paginate(page_size):
     """
     Generator function that implements lazy loading pagination.
     
@@ -74,7 +74,7 @@ if __name__ == "__main__":
     page_count = 0
     
     try:
-        for page in lazy_pagination(5):
+        for page in lazy_paginate(5):
             page_count += 1
             print(f"\n--- Page {page_count} ---")
             for user in page:
